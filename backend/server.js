@@ -16,16 +16,16 @@ app.use(helmet());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.get("/api/health", (req, res) => {
+app.get("/health", (req, res) => {
   res.json({
     status: "ok",
     timestamp: new Date()
   });
 });
 
-app.use("/api/services", serviceRoutes);
-app.use("/api/appointments", appointmentRoutes);
-app.use("/api/available-slots", slotsRoutes);
+app.use("/services", serviceRoutes);
+app.use("/appointments", appointmentRoutes);
+app.use("/available-slots", slotsRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);
