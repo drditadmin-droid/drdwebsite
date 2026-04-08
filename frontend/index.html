@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Clinic Appointment Booking</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            background: #2f80ed;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1c60c9;
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .success {
+            background: #e6f9ed;
+            color: #0a7a2f;
+        }
+
+        .error {
+            background: #fdecea;
+            color: #b00020;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Book Dental Appointment</h1>
+
+    <form id="appointmentForm">
+
+        <label>Full Name</label>
+        <input type="text" id="full_name" required>
+
+        <label>Phone</label>
+        <input type="text" id="phone" required>
+
+        <label>Email</label>
+        <input type="email" id="email">
+
+        <label>Service</label>
+        <select id="service_id" required>
+            <option value="">Loading services...</option>
+        </select>
+
+        <label>Appointment Date</label>
+        <input type="date" id="appointment_date" required>
+
+        <label>Appointment Time</label>
+        <select id="appointment_time" required>
+            <option value="">Select date first</option>
+        </select>
+
+        <label>Notes</label>
+        <textarea id="notes"></textarea>
+
+        <button type="submit">Book Appointment</button>
+
+        <div id="successMessage" class="message success"></div>
+        <div id="errorMessage" class="message error"></div>
+
+    </form>
+
+</div>
+
+<script>
+
+// =============================
+// CONFIG
+// =============================
+
+const API_BASE = "https://your-render-api-url.onrender.com/api";
+
+
+// =============================
+// LOAD SERVICES
+// =============================
+
+async function loadServices() {
+
+    try {
+
+        const response = await fetch(`${API_BASE}/services`);
+        const result = await response.json();
+
+        const select = document.getElementById("service_id");
+
+        select.innerHTML = "";
+
+        result.data.forEach(service => {
+
+            const option = document.createElement("option");
+
+            option.value = service.id;
+            option.textContent = `${service.name} (${service.duration_minutes} min)`;
+
+            select.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        console.error("Failed to load services", error);
+
+    }
+}
+
+
+// =============================
+// LOAD AVAILABLE SLOTS
+// =============================
+
+async function loadSlots(date) {
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/available-slots?date=${date}` 
+        );
+
+        const result = await response.json();
+
+        const select = document.getElementById("appointment_time");
+
+        select.innerHTML = "";
+
+        result.slots.forEach(slot => {
+
+            const option = document.createElement("option");
+
+            option.value = slot;
+            option.textContent = slot;
+
+            select.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        console.error("Failed to load slots", error);
+
+    }
+}
+
+
+// =============================
+// DATE CHANGE EVENT
+// =============================
+
+const dateInput = document.getElementById("appointment_date");
+
+if (dateInput) {
+
+    dateInput.addEventListener("change", function () {
+
+        const date = this.value;
+
+        if (date) {
+            loadSlots(date);
+        }
+
+    });
+
+}
+
+
+// =============================
+// SUBMIT FORM
+// =============================
+
+const form = document.getElementById("appointmentForm");
+
+form.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+    hideMessages();
+
+    const payload = {
+
+        full_name: document.getElementById("full_name").value,
+
+        phone: document.getElementById("phone").value,
+
+        email: document.getElementById("email").value,
+
+        service_id: document.getElementById("service_id").value,
+
+        appointment_date:
+            document.getElementById("appointment_date").value,
+
+        appointment_time:
+            document.getElementById("appointment_time").value,
+
+        notes: document.getElementById("notes").value
+    };
+
+
+    try {
+
+        const response = await fetch(`${API_BASE}/appointments`, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(payload)
+
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+
+            showSuccess(
+                "Appointment booked successfully. Reference ID: " +
+                result.appointment_id
+            );
+
+            form.reset();
+
+        } else {
+
+            showError(result.error || "Booking failed");
+
+        }
+
+    } catch (error) {
+
+        showError("Server connection failed");
+
+    }
+
+});
+
+
+// =============================
+// UI HELPERS
+// =============================
+
+function showSuccess(message) {
+
+    const el = document.getElementById("successMessage");
+
+    el.style.display = "block";
+
+    el.textContent = message;
+
+}
+
+
+function showError(message) {
+
+    const el = document.getElementById("errorMessage");
+
+    el.style.display = "block";
+
+    el.textContent = message;
+
+}
+
+
+function hideMessages() {
+
+    document.getElementById("successMessage").style.display = "none";
+
+    document.getElementById("errorMessage").style.display = "none";
+
+}
+
+
+// =============================
+// INIT
+// =============================
+
+loadServices();
+
+</script>
+
+</body>
+</html>
