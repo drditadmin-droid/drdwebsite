@@ -1511,7 +1511,8 @@
       timeSelect.disabled = true;
       try {
         const res = await fetch(`${API_BASE}/available-slots?date=${date}`);
-        const slots = await res.json();
+        const json = await res.json();
+        const slots = json.slots || json;
         timeSelect.innerHTML = '';
         if (!slots || slots.length === 0) {
           timeSelect.innerHTML = '<option value="">No slots available</option>';
