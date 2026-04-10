@@ -1,334 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dental Clinic Appointment Booking</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond Dental Care</title>
 
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f5f7fb;
-            margin: 0;
-            padding: 0;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        .container {
-            max-width: 700px;
-            margin: 40px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-        }
+<style>
 
-        h1 {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: #f7f9fc;
+}
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 15px;
-        }
+header {
+    background: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
 
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 6px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
+.logo {
+    font-weight: 600;
+    font-size: 22px;
+    color: #1e88e5;
+}
 
-        button {
-            width: 100%;
-            margin-top: 20px;
-            padding: 12px;
-            background: #2f80ed;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+nav a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
 
-        button:hover {
-            background: #1c60c9;
-        }
+.hero {
+    background: linear-gradient(120deg,#1e88e5,#42a5f5);
+    color: white;
+    padding: 80px 40px;
+    text-align: center;
+}
 
-        .message {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 6px;
-            display: none;
-        }
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
 
-        .success {
-            background: #e6f9ed;
-            color: #0a7a2f;
-        }
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
 
-        .error {
-            background: #fdecea;
-            color: #b00020;
-        }
-    </style>
+.btn {
+    background: white;
+    color: #1e88e5;
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+}
+
+.section {
+    padding: 60px 40px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 25px;
+}
+
+.service-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.service-card h3 {
+    margin-top: 0;
+}
+
+.about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+}
+
+.about img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.testimonials {
+    background: #eef4fb;
+}
+
+.testimonial-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+button.submit-btn {
+    margin-top: 20px;
+    width: 100%;
+    background: #1e88e5;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+button.submit-btn:hover {
+    background: #1565c0;
+}
+
+footer {
+    background: #1e88e5;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 6px;
+    display: none;
+}
+
+.success {
+    background: #e6f9ed;
+    color: #0a7a2f;
+}
+
+.error {
+    background: #fdecea;
+    color: #b00020;
+}
+
+@media(max-width:768px) {
+    .about {
+        grid-template-columns: 1fr;
+    }
+    header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    nav a {
+        margin-left: 10px;
+    }
+}
+
+</style>
 </head>
+
 <body>
 
-<div class="container">
+<header>
+<div class="logo">Beyond Dental Care</div>
+<nav>
+<a href="#services">Services</a>
+<a href="#about">About</a>
+<a href="#testimonials">Testimonials</a>
+<a href="#appointment">Book Appointment</a>
+</nav>
+</header>
 
-    <h1>Book Dental Appointment</h1>
+<section class="hero">
+<h1>Your Smile, Our Priority</h1>
+<p>Modern dental care with comfort and precision.</p>
+<button class="btn" onclick="document.getElementById('appointment').scrollIntoView()">
+Book Appointment
+</button>
+</section>
 
-    <form id="appointmentForm">
-
-        <label>Full Name</label>
-        <input type="text" id="full_name" required>
-
-        <label>Phone</label>
-        <input type="text" id="phone" required>
-
-        <label>Email</label>
-        <input type="email" id="email">
-
-        <label>Service</label>
-        <select id="service_id" required>
-            <option value="">Loading services...</option>
-        </select>
-
-        <label>Appointment Date</label>
-        <input type="date" id="appointment_date" required>
-
-        <label>Appointment Time</label>
-        <select id="appointment_time" required>
-            <option value="">Select date first</option>
-        </select>
-
-        <label>Notes</label>
-        <textarea id="notes"></textarea>
-
-        <button type="submit">Book Appointment</button>
-
-        <div id="successMessage" class="message success"></div>
-        <div id="errorMessage" class="message error"></div>
-
-    </form>
-
+<section class="section" id="services">
+<h2>Our Services</h2>
+<div class="services-grid" id="servicesGrid">
+Loading services...
 </div>
+</section>
+
+<section class="section about" id="about">
+<div>
+<h2>About Our Clinic</h2>
+<p>
+We provide advanced dental treatments with a patient-first approach. Our team focuses on safety, hygiene, and modern technology to deliver reliable dental care.
+</p>
+</div>
+<div>
+<img src="clinic.jpg" alt="Dental Clinic">
+</div>
+</section>
+
+<section class="section testimonials" id="testimonials">
+<h2>Patient Testimonials</h2>
+<div class="testimonial-card">
+Great service and friendly staff. Highly recommended.
+</div>
+<div class="testimonial-card">
+Very professional and painless treatment experience.
+</div>
+</section>
+
+<section class="section" id="appointment">
+<h2>Book Appointment</h2>
+<div class="form-container">
+<form id="appointmentForm">
+
+<label>Full Name</label>
+<input type="text" id="full_name" required>
+
+<label>Phone</label>
+<input type="text" id="phone" required>
+
+<label>Email</label>
+<input type="email" id="email">
+
+<label>Service</label>
+<select id="service_id" required></select>
+
+<label>Date</label>
+<input type="date" id="appointment_date" required>
+
+<label>Time</label>
+<select id="appointment_time" required></select>
+
+<label>Notes</label>
+<textarea id="notes"></textarea>
+
+<button class="submit-btn" type="submit">Book Appointment</button>
+
+<div id="successMessage" class="message success"></div>
+<div id="errorMessage" class="message error"></div>
+
+</form>
+</div>
+</section>
+
+<footer>
+&copy; 2026 Beyond Dental Care. All rights reserved.
+</footer>
 
 <script>
 
-// =============================
-// CONFIG
-// =============================
-
 const API_BASE = "https://drdwebsite-usxh.onrender.com";
 
-
-// =============================
-// LOAD SERVICES
-// =============================
-
 async function loadServices() {
-
     try {
-
         const response = await fetch(`${API_BASE}/services`);
         const result = await response.json();
 
+        const grid = document.getElementById("servicesGrid");
         const select = document.getElementById("service_id");
 
+        grid.innerHTML = "";
         select.innerHTML = "";
 
         result.data.forEach(service => {
 
+            const card = document.createElement("div");
+            card.className = "service-card";
+            card.innerHTML = `<h3>${service.name}</h3><p>Duration: ${service.duration_minutes} minutes</p>`;
+            grid.appendChild(card);
+
             const option = document.createElement("option");
-
             option.value = service.id;
-            option.textContent = `${service.name} (${service.duration_minutes} min)`;
-
+            option.textContent = service.name;
             select.appendChild(option);
 
         });
-
     } catch (error) {
-
         console.error("Failed to load services", error);
-
     }
 }
 
-
-// =============================
-// LOAD AVAILABLE SLOTS
-// =============================
-
 async function loadSlots(date) {
-
     try {
-
-        const response = await fetch(
-            `${API_BASE}/available-slots?date=${date}` 
-        );
-
+        const response = await fetch(`${API_BASE}/available-slots?date=${date}`);
         const result = await response.json();
 
         const select = document.getElementById("appointment_time");
-
         select.innerHTML = "";
 
         result.slots.forEach(slot => {
-
             const option = document.createElement("option");
-
             option.value = slot;
             option.textContent = slot;
-
             select.appendChild(option);
-
         });
-
     } catch (error) {
-
         console.error("Failed to load slots", error);
-
     }
 }
 
+document.getElementById("appointment_date").addEventListener("change", function () {
+    if (this.value) loadSlots(this.value);
+});
 
-// =============================
-// DATE CHANGE EVENT
-// =============================
-
-const dateInput = document.getElementById("appointment_date");
-
-if (dateInput) {
-
-    dateInput.addEventListener("change", function () {
-
-        const date = this.value;
-
-        if (date) {
-            loadSlots(date);
-        }
-
-    });
-
-}
-
-
-// =============================
-// SUBMIT FORM
-// =============================
-
-const form = document.getElementById("appointmentForm");
-
-form.addEventListener("submit", async function (e) {
-
+document.getElementById("appointmentForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    hideMessages();
+    document.getElementById("successMessage").style.display = "none";
+    document.getElementById("errorMessage").style.display = "none";
 
     const payload = {
-
         full_name: document.getElementById("full_name").value,
-
         phone: document.getElementById("phone").value,
-
         email: document.getElementById("email").value,
-
         service_id: document.getElementById("service_id").value,
-
-        appointment_date:
-            document.getElementById("appointment_date").value,
-
-        appointment_time:
-            document.getElementById("appointment_time").value,
-
+        appointment_date: document.getElementById("appointment_date").value,
+        appointment_time: document.getElementById("appointment_time").value,
         notes: document.getElementById("notes").value
     };
 
-
     try {
-
         const response = await fetch(`${API_BASE}/appointments`, {
-
             method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
-
         });
 
         const result = await response.json();
 
         if (response.ok) {
-
-            showSuccess(
-                "Appointment booked successfully. Reference ID: " +
-                result.appointment_id
-            );
-
-            form.reset();
-
+            const el = document.getElementById("successMessage");
+            el.style.display = "block";
+            el.textContent = "Appointment booked successfully. Reference ID: " + result.appointment_id;
+            document.getElementById("appointmentForm").reset();
         } else {
-
-            showError(result.error || "Booking failed");
-
+            const el = document.getElementById("errorMessage");
+            el.style.display = "block";
+            el.textContent = result.error || "Booking failed";
         }
-
     } catch (error) {
-
-        showError("Server connection failed");
-
+        const el = document.getElementById("errorMessage");
+        el.style.display = "block";
+        el.textContent = "Server connection failed";
     }
-
 });
-
-
-// =============================
-// UI HELPERS
-// =============================
-
-function showSuccess(message) {
-
-    const el = document.getElementById("successMessage");
-
-    el.style.display = "block";
-
-    el.textContent = message;
-
-}
-
-
-function showError(message) {
-
-    const el = document.getElementById("errorMessage");
-
-    el.style.display = "block";
-
-    el.textContent = message;
-
-}
-
-
-function hideMessages() {
-
-    document.getElementById("successMessage").style.display = "none";
-
-    document.getElementById("errorMessage").style.display = "none";
-
-}
-
-
-// =============================
-// INIT
-// =============================
 
 loadServices();
 
